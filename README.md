@@ -151,4 +151,4 @@ Pour toute question ou problème d'utilisation:
 
 ---
 
-**Développé avec ❤️ par Admin Panel Team**
+**Développé PAR DIGITAL CONCEPT
