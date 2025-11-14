@@ -1,814 +1,150 @@
+[14:50, 14/11/2025] ChatGPT: ```html
 <!DOCTYPE html>
-<html class="light-style layout-menu-fixed" data-theme="theme-default" data-assets-path="./assets/" data-base-url="." data-framework="bootstrap" data-template="vertical-menu-template-free">
+<html lang="fr" dir="ltr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <title>Admin Panel - Dashboard</title>
-  <meta name="description" content="Panel d'administration avec accès admin" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="./assets/img/favicon.png" />
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Boxicons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
-
-  <!-- Perfect Scrollbar -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/dist/css/perfect-scrollbar.min.css" />
-
-  <!-- Custom CSS -->
-  <style>
-    :root {
-      --primary-color: #696cff;
-      --secondary-color: #8592a3;
-      --success-color: #71dd37;
-      --danger-color: #ff3e1d;
-      --warning-color: #ffab00;
-      --info-color: #03c3ec;
-      --dark-color: #233446;
-      --light-color: #f5f5f9;
-      --navbar-bg: #fff;
-      --sidebar-bg: #fff;
-      --card-bg: #fff;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Panel 4 Pro - IPTV Abonnements</title>
+<style>
+  /* Couleurs principales */
+  :root {
+    --bleu-petrole: #004d40;
+    --turquoise: #40c4ff;
+    --corail: #ff6f61;
+    --fond: #e0f2f1;
+    --texte: #00251a;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--fond);
+    color: var(--texte);
+  }
+  header {
+    background: var(--bleu-petrole);
+    color: white;
+    text-align: center;
+    padding: 1.2em 0;
+    font-weight: 900;
+    font-size: 1.9em;
+    letter-spacing: 2px;
+    user-select: none;
+  }
+  header .logo {
+    color: var(--corail);
+    font-style: italic;
+  }
+  main {
+    max-width: 1100px;
+    margin: 1.5em auto;
+    padding: 0 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.8em;
+  }
+  section {
+    background: white;
+    border-radius: 10px;
+    padding: 1.3em 1.5em;
+[14:50, 14/11/2025] ChatGPT: #user-dashboard .balance {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin-bottom: 1em;
+  }
+  #user-dashboard .products-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--turquoise);
+    border-radius: 8px;
+    background: #00332e;
+    padding: 0.5em;
+  }
+  #user-dashboard .products-list li {
+    padding: 0.7em;
+    border-bottom: 1px solid var(--corail);
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  #user-dashboard .products-list li:hover {
+    background: var(--corail);
+    color: white;
+  }
+  /* Responsive */
+  @media(max-width: 760px) {
+    main {
+      flex-direction: column;
+      margin: 1em;
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Public Sans', sans-serif;
-      background-color: var(--light-color);
-      overflow-x: hidden;
-    }
-
-    .layout-wrapper {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    .layout-menu {
-      width: 250px;
-      background: var(--sidebar-bg);
-      border-right: 1px solid #e7e7e9;
-      position: fixed;
-      height: 100vh;
-      overflow-y: auto;
-      z-index: 1000;
-      transition: transform 0.3s ease;
-    }
-
-    .app-brand {
-      padding: 1.5rem;
-      border-bottom: 1px solid #e7e7e9;
-      text-align: center;
-    }
-
-    .app-brand-logo img {
-      max-width: 120px;
-      height: auto;
-    }
-
-    .menu-inner {
-      padding: 1rem 0;
-    }
-
-    .menu-item {
-      margin-bottom: 0.25rem;
-    }
-
-    .menu-link {
-      display: flex;
-      align-items: center;
-      padding: 0.75rem 1.5rem;
-      color: var(--dark-color);
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .menu-link:hover {
-      background-color: var(--light-color);
-      color: var(--primary-color);
-    }
-
-    .menu-link.active {
-      background-color: var(--primary-color);
-      color: white;
-    }
-
-    .menu-link img {
-      width: 24px;
-      height: 24px;
-      margin-right: 0.75rem;
-    }
-
-    .layout-page {
-      margin-left: 250px;
-      flex: 1;
-      min-height: 100vh;
-    }
-
-    .layout-navbar {
-      background: var(--navbar-bg);
-      border-bottom: 1px solid #e7e7e9;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .navbar-brand {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--dark-color);
-      text-decoration: none;
-    }
-
-    .content-wrapper {
-      padding: 2rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: none;
-      border-radius: 0.5rem;
-      box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
-      margin-bottom: 1.5rem;
-    }
-
-    .card-header {
-      background: transparent;
-      border-bottom: 1px solid #e7e7e9;
-      padding: 1.25rem;
-      font-weight: 600;
-    }
-
-    .card-body {
-      padding: 1.25rem;
-    }
-
-    .btn-primary {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-
-    .btn-primary:hover {
-      background-color: #5a61e6;
-      border-color: #5a61e6;
-    }
-
-    .solde-div {
-      background: linear-gradient(135deg, var(--primary-color), #8a94ff);
-      color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-    }
-
-    .solde-amount {
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 0.5rem 0;
-    }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .dropdown-menu {
-      border: none;
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    }
-
-    .marquee {
-      background: white;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-      text-align: center;
-      box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
-    }
-
-    .stat-card {
-      border-left: 4px solid var(--primary-color);
-    }
-
-    .stat-card.success {
-      border-left-color: var(--success-color);
-    }
-
-    .stat-card.danger {
-      border-left-color: var(--danger-color);
-    }
-
-    .transaction-item {
-      display: flex;
-      align-items: center;
-      padding: 1rem;
-      border-bottom: 1px solid #e7e7e9;
-    }
-
-    .transaction-item:last-child {
-      border-bottom: none;
-    }
-
-    .transaction-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--light-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 1rem;
-    }
-
-    .transaction-details {
-      flex: 1;
-    }
-
-    .transaction-amount {
-      font-weight: 600;
-      text-align: right;
-    }
-
-    .transaction-amount.positive {
-      color: var(--success-color);
-    }
-
-    .transaction-amount.negative {
-      color: var(--danger-color);
-    }
-
-    @media (max-width: 768px) {
-      .layout-menu {
-        transform: translateX(-100%);
-      }
-
-      .layout-menu.show {
-        transform: translateX(0);
-      }
-
-      .layout-page {
-        margin-left: 0;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .content-wrapper {
-        padding: 1rem;
-      }
-    }
-
-    .loading {
-      display: none;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .spinner {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid var(--primary-color);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .alert-custom {
-      border-radius: 0.5rem;
-      border: none;
-      padding: 1rem 1.25rem;
-    }
-
-    .footer {
-      background: var(--navbar-bg);
-      border-top: 1px solid #e7e7e9;
-      padding: 1rem 2rem;
-      text-align: center;
-      margin-top: auto;
-    }
-
-    .badge-notification {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: var(--danger-color);
-      color: white;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .menu-icon {
-      font-size: 1.25rem;
-      margin-right: 0.75rem;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <!-- Layout Wrapper -->
-  <div class="layout-wrapper">
-    <!-- Sidebar Menu -->
-    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-      <!-- App Brand -->
-      <div class="app-brand">
-        <a href="#" class="app-brand-link">
-          <span class="app-brand-logo">
-            <img src="./assets/img/logo.png" alt="Logo" width="120" />
-          </span>
-          <span class="app-brand-text">PANEL 4 PANEL</span>
-        </a>
-      </div>
 
-      <!-- Menu Inner -->
-      <ul class="menu-inner py-1">
-        <li class="menu-item active">
-          <a href="#" class="menu-link">
-            <i class='bx bxs-dashboard menu-icon'></i>
-            <div>Dashboard</div>
-          </a>
-        </li>
+<header><span class="logo">Panel 4 Pro</span> - IPTV Abonnements</heade…
+[14:50, 14/11/2025] ChatGPT: <script>
+  // Données simulées
+  let products = [];
+  let tickets = [];
 
-        <li class="menu-item">
-          <a href="products.html" class="menu-link">
-            <i class='bx bx-package menu-icon'></i>
-            <div>Gestion Produits</div>
-          </a>
-        </li>
-
-        <li class="menu-item">
-          <a href="users.html" class="menu-link">
-            <i class='bx bx-group menu-icon'></i>
-            <div>Gestion Utilisateurs</div>
-          </a>
-        </li>
-
-        <li class="menu-item">
-          <a href="#" class="menu-link">
-            <i class='bx bx-dollar-circle menu-icon'></i>
-            <div>Transactions</div>
-          </a>
-        </li>
-
-        <li class="menu-item">
-          <a href="#" class="menu-link">
-            <i class='bx bx-history menu-icon'></i>
-            <div>Historique</div>
-          </a>
-        </li>
-
-        <li class="menu-item">
-          <a href="#" class="menu-link">
-            <i class='bx bx-store menu-icon'></i>
-            <div>Revendeurs</div>
-          </a>
-        </li>
-
-        <li class="menu-item">
-          <a href="packages.html" class="menu-link">
-            <i class='bx bx-package menu-icon'></i>
-            <div>Gestion Produits</div>
-          </a>
-        </li>
-
-        <li class="menu-item">
-          <a href="user-management.html" class="menu-link">
-            <i class='bx bx-user menu-icon'></i>
-            <div>Gestion Utilisateurs</div>
-          </a>
-        </li>
-
-        <li class="menu-item">
-          <a href="#" class="menu-link">
-            <i class='bx bx-cog menu-icon'></i>
-            <div>Paramètres</div>
-          </a>
-        </li>
-
-        <li class="menu-item">
-          <a href="#" onclick="logout()" class="menu-link">
-            <i class='bx bx-log-out menu-icon'></i>
-            <div>Déconnexion</div>
-          </a>
-        </li>
-      </ul>
-    </aside>
-
-    <!-- Layout Page -->
-    <div class="layout-page">
-      <!-- Navbar -->
-      <nav class="layout-navbar">
-        <div class="d-flex align-items-center">
-          <button class="menu-toggle" onclick="toggleSidebar()">
-            <i class='bx bx-menu'></i>
-          </button>
-          <h4 class="mb-0 ms-3">Tableau de Bord Admin</h4>
-        </div>
-
-        <div class="d-flex align-items-center">
-          <!-- Notifications -->
-          <div class="dropdown me-3 position-relative">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-              <i class='bx bx-bell'></i>
-              <span class="badge-notification">3</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><h6 class="dropdown-header">Notifications</h6></li>
-              <li><a class="dropdown-item" href="#">Nouvelle commande reçue</a></li>
-              <li><a class="dropdown-item" href="#">Nouveau client inscrit</a></li>
-              <li><a class="dropdown-item" href="#">Mise à jour système disponible</a></li>
-            </ul>
-          </div>
-
-          <!-- User Dropdown -->
-          <div class="dropdown">
-            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
-              <img src="./assets/img/admin-avatar.png" alt="Admin" class="user-avatar me-2">
-              <span>Admin</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#"><i class='bx bx-user me-2'></i>Profil</a></li>
-              <li><a class="dropdown-item" href="#"><i class='bx bx-cog me-2'></i>Paramètres</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#" onclick="logout()"><i class='bx bx-log-out me-2'></i>Déconnexion</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      <!-- Content Wrapper -->
-      <div class="content-wrapper">
-        <!-- Alert Messages -->
-        <div id="alert-container"></div>
-
-        <!-- Loading -->
-        <div id="loading" class="loading">
-          <div class="spinner"></div>
-          <p>Chargement...</p>
-        </div>
-
-        <!-- Main Content -->
-        <div id="main-content">
-          <!-- Marquee Messages -->
-          <div class="marquee">
-            <strong>Bienvenue sur votre panel d'administration!</strong> |
-            Minimum de solde requis: 1000 MAD |
-            Vérifiez régulièrement vos transactions
-          </div>
-
-          <!-- Stats Cards Row -->
-          <div class="row mb-4">
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card solde-div">
-                <div class="card-body">
-                  <h5 class="card-title text-white">Solde Actuel</h5>
-                  <div class="solde-amount">9,876 MAD</div>
-                  <small class="text-white-50">Dernière mise à jour: Aujourd'hui</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card stat-card success">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h5 class="card-title text-success">Revenus</h5>
-                      <h3 class="mb-0">15,234 MAD</h3>
-                      <small class="text-muted">Ce mois</small>
-                    </div>
-                    <i class='bx bx-trending-up text-success' style="font-size: 2rem;"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card stat-card danger">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h5 class="card-title text-danger">Dépenses</h5>
-                      <h3 class="mb-0">8,123 MAD</h3>
-                      <small class="text-muted">Ce mois</small>
-                    </div>
-                    <i class='bx bx-trending-down text-danger' style="font-size: 2rem;"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Charts Row -->
-          <div class="row mb-4">
-            <div class="col-lg-8 mb-4">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title mb-0">Statistiques des revenus</h5>
-                </div>
-                <div class="card-body">
-                  <canvas id="revenueChart" width="400" height="200"></canvas>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 mb-4">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title mb-0">Produits populaires</h5>
-                </div>
-                <div class="card-body">
-                  <canvas id="productChart" width="400" height="300"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Recent Transactions -->
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title mb-0">Transactions récentes</h5>
-                </div>
-                <div class="card-body">
-                  <div id="transactions-list">
-                    <div class="transaction-item">
-                      <div class="transaction-icon">
-                        <i class='bx bx-receipt text-primary'></i>
-                      </div>
-                      <div class="transaction-details">
-                        <h6 class="mb-1">Achat Produit Premium</h6>
-                        <small class="text-muted">Il y a 2 heures</small>
-                      </div>
-                      <div class="transaction-amount negative">
-                        -299 MAD
-                      </div>
-                    </div>
-
-                    <div class="transaction-item">
-                      <div class="transaction-icon">
-                        <i class='bx bx-wallet text-success'></i>
-                      </div>
-                      <div class="transaction-details">
-                        <h6 class="mb-1">Recharge compte</h6>
-                        <small class="text-muted">Il y a 5 heures</small>
-                      </div>
-                      <div class="transaction-amount positive">
-                        +1,500 MAD
-                      </div>
-                    </div>
-
-                    <div class="transaction-item">
-                      <div class="transaction-icon">
-                        <i class='bx bx-receipt text-primary'></i>
-                      </div>
-                      <div class="transaction-details">
-                        <h6 class="mb-1">Achat Abonnement Mensuel</h6>
-                        <small class="text-muted">Hier</small>
-                      </div>
-                      <div class="transaction-amount negative">
-                        -89 MAD
-                      </div>
-                    </div>
-
-                    <div class="transaction-item">
-                      <div class="transaction-icon">
-                        <i class='bx bx-user-plus text-info'></i>
-                      </div>
-                      <div class="transaction-details">
-                        <h6 class="mb-1">Nouveau client</h6>
-                        <small class="text-muted">Il y a 2 jours</small>
-                      </div>
-                      <div class="transaction-amount positive">
-                        +450 MAD
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div class="footer">
-        <div class="text-center">
-          <small>&copy; 2024 Admin Panel. Tous droits réservés.</small>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/dist/perfect-scrollbar.min.js"></script>
-
-  <script>
-    // Initialize Perfect Scrollbar for sidebar
-    const sidebar = document.getElementById('layout-menu');
-    if (sidebar) {
-      new PerfectScrollbar(sidebar);
-    }
-
-    // Toggle sidebar
-    function toggleSidebar() {
-      const menu = document.getElementById('layout-menu');
-      menu.classList.toggle('show');
-    }
-
-    // Navigate to page
-    function navigateToPage(page) {
-      showLoading();
-      setTimeout(() => {
-        window.location.href = page;
-      }, 500);
-    }
-
-    // Logout function
-    function logout() {
-      if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
-        showLoading();
-        setTimeout(() => {
-          localStorage.removeItem('admin_token');
-          window.location.href = 'login.html';
-        }, 1000);
-      }
-    }
-
-    // Show loading
-    function showLoading() {
-      document.getElementById('loading').style.display = 'block';
-      document.getElementById('main-content').style.opacity = '0.5';
-    }
-
-    // Hide loading
-    function hideLoading() {
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('main-content').style.opacity = '1';
-    }
-
-    // Show alert
-    function showAlert(message, type = 'info') {
-      const alertContainer = document.getElementById('alert-container');
-      const alertHtml = `
-        <div class="alert alert-${type} alert-custom alert-dismissible fade show" role="alert">
-          ${message}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-      `;
-      alertContainer.innerHTML = alertHtml;
-
-      // Auto-hide after 5 seconds
-      setTimeout(() => {
-        const alert = alertContainer.querySelector('.alert');
-        if (alert) {
-          alert.classList.remove('show');
-          setTimeout(() => alert.remove(), 300);
-        }
-      }, 5000);
-    }
-
-    // Initialize Revenue Chart
-    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-    const revenueChart = new Chart(revenueCtx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul'],
-        datasets: [{
-          label: 'Revenus',
-          data: [12000, 15000, 18000, 14000, 20000, 18000, 22000],
-          backgroundColor: 'rgba(105, 108, 255, 0.8)',
-          borderColor: 'rgba(105, 108, 255, 1)',
-          borderWidth: 1
-        }, {
-          label: 'Dépenses',
-          data: [8000, 9000, 11000, 7000, 12000, 10000, 14000],
-          backgroundColor: 'rgba(255, 62, 29, 0.8)',
-          borderColor: 'rgba(255, 62, 29, 1)',
-          borderWidth: 1
-        }]
+  // Gestion ajout produit
+  const productForm = document.getElementById('productForm');
+  productForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const form = e.target;
+    const product = {
+      name: form.productName.value.trim(),
+      prices: {
+        '1': parseFloat(form.price1.value),
+        '4': parseFloat(form.price4.value),
+        '6': parseFloat(form.price6.value),
+        '12': parseFloat(form.price12.value)
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
+      image: form.productImage.files.length > 0 ? form.productImage.files[0].name : ''
+    };
+    products.push(product);
+    alert('Produit ajouté avec succès.');
+    form.reset();
+    renderUserProducts();
+  });
+
+  // Gestion création uti…
+[14:50, 14/11/2025] ChatGPT: <input type="number" name="price6" min="0" step="0.01" required />
+
+    <label>Prix 12 mois (€) :</label>
+    <input type="number" name="price12" min="0" step="0.01" required />
+
+    <label>Image du produit :</label>
+    <input type="file" name="productImage" accept="image/*" />
+    
+    <button type="submit">Ajouter Produit</button>
+  </form>
+
+  <h2>Création Utilisateur</h2>
+  <form id="userForm">
+    <label>Nom d'utilisateur :</label>
+    <input type="text" name="username" required />
+
+    <label>Rôle :</label>
+    <select name="role" required>
+      <option value="user">Utilisateur</option>
+      <option value="moderator">Modérateur</option>
+      <option value="admin">Administrateur</option>
+    </select>
+    <button type="submit">Créer Utilisateur</butt…
+[14:50, 14/11/2025] ChatGPT: }
+    products.forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = p.name - 1 mois:{p.prices['1']}€ | 4 mois: p.prices['4']€ | 6 mois:{p.prices['6']}€ | 12 mois: ${p.prices['12']}€;
+      list.appendChild(li);
     });
+  }
 
-    // Initialize Product Chart
-    const productCtx = document.getElementById('productChart').getContext('2d');
-    const productChart = new Chart(productCtx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Abonnements', 'Produits Premium', 'Services', 'Autres'],
-        datasets: [{
-          data: [35, 25, 30, 10],
-          backgroundColor: [
-            'rgba(105, 108, 255, 0.8)',
-            'rgba(113, 221, 55, 0.8)',
-            'rgba(255, 171, 0, 0.8)',
-            'rgba(3, 195, 236, 0.8)'
-          ],
-          borderColor: [
-            'rgba(105, 108, 255, 1)',
-            'rgba(113, 221, 55, 1)',
-            'rgba(255, 171, 0, 1)',
-            'rgba(3, 195, 236, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom'
-          }
-        }
-      }
-    });
+  renderUserProducts();
+</script>
 
-    // Check authentication
-    function checkAuth() {
-      const token = localStorage.getItem('admin_token');
-      if (!token) {
-        window.location.href = 'login.html';
-        return false;
-      }
-      return true;
-    }
-
-    // Simulate real-time updates
-    function updateStats() {
-      // Update balance randomly
-      const balanceElement = document.querySelector('.solde-amount');
-      if (balanceElement) {
-        const currentBalance = parseInt(balanceElement.textContent.replace(/[^0-9]/g, ''));
-        const newBalance = currentBalance + Math.floor(Math.random() * 200) - 100;
-        balanceElement.textContent = `${newBalance.toLocaleString()} MAD`;
-      }
-    }
-
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      if (checkAuth()) {
-        hideLoading();
-        showAlert('Bienvenue sur votre tableau de bord!', 'success');
-
-        // Simulate real-time updates every 30 seconds
-        setInterval(updateStats, 30000);
-      }
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768) {
-        document.getElementById('layout-menu').classList.remove('show');
-      }
-    });
-  </script>
 </body>
 </html>
+```
